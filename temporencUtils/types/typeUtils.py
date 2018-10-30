@@ -7,29 +7,29 @@ class TypeUtils:
 
     VALID_TYPE_NAMES = ("D", "T", "DT", "DTZ", "DTS", "DTSZ")
     VALID_PRECISION_NAMES = ("millisecond", "microsecond", "nanosecond", "none")
-    TYPE_D = {"size": 3, "type_name": "D", "type_tag": "100",
+    TYPE_D = {"size": 3, "_type_name": "D", "type_tag": "100",
               "map": "100DDDDD DDDDDDDD DDDDDDDD"}
-    TYPE_T = {"size": 3, "type_name": "T", "type_tag": "1010000",
+    TYPE_T = {"size": 3, "_type_name": "T", "type_tag": "1010000",
               "map": "1010000T TTTTTTTT TTTTTTTT"}
-    TYPE_DT = {"size": 5, "type_name": "DT", "type_tag": "00",
+    TYPE_DT = {"size": 5, "_type_name": "DT", "type_tag": "00",
                "map": "00DDDDDD DDDDDDDD DDDDDDDT TTTTTTTT TTTTTTTT"}
-    TYPE_DTZ = {"size": 6, "type_name": "DTZ", "type_tag": "110",
+    TYPE_DTZ = {"size": 6, "_type_name": "DTZ", "type_tag": "110",
                 "map": "110DDDDD DDDDDDDD DDDDDDDD TTTTTTTT TTTTTTTT TZZZZZZZ"}
-    TYPE_DTS_MILLI = {"size": 7, "type_name": "DTS", "type_tag": "01",
+    TYPE_DTS_MILLI = {"size": 7, "_type_name": "DTS", "type_tag": "01",
                       "map": "01PPDDDD DDDDDDDD DDDDDDDD DTTTTTTT TTTTTTTT TTSSSSSS SSSS0000"}
-    TYPE_DTS_MICRO = {"size": 8, "type_name": "DTS", "type_tag": "01",
+    TYPE_DTS_MICRO = {"size": 8, "_type_name": "DTS", "type_tag": "01",
                       "map": "01PPDDDD DDDDDDDD DDDDDDDD DTTTTTTT TTTTTTTT TTSSSSSS SSSSSSSS SSSSSS00"}
-    TYPE_DTS_NANO = {"size": 9, "type_name": "DTS", "type_tag": "01",
+    TYPE_DTS_NANO = {"size": 9, "_type_name": "DTS", "type_tag": "01",
                      "map": "01PPDDDD DDDDDDDD DDDDDDDD DTTTTTTT TTTTTTTT TTSSSSSS SSSSSSSS SSSSSSSS SSSSSSSS"}
-    TYPE_DTS_NONE = {"size": 6, "type_name": "DTS", "type_tag": "01",
+    TYPE_DTS_NONE = {"size": 6, "_type_name": "DTS", "type_tag": "01",
                      "map": "01PPDDDD DDDDDDDD DDDDDDDD DTTTTTTT TTTTTTTT TT000000"}
-    TYPE_DTSZ_MILLI = {"size": 8, "type_name": "DTSZ", "type_tag": "111",
+    TYPE_DTSZ_MILLI = {"size": 8, "_type_name": "DTSZ", "type_tag": "111",
                        "map": "111PPDDD DDDDDDDD DDDDDDDD DDTTTTTT TTTTTTTT TTTSSSSS SSSSSZZZ ZZZZ0000"}
-    TYPE_DTSZ_MICRO = {"size": 9, "type_name": "DTSZ", "type_tag": "111",
+    TYPE_DTSZ_MICRO = {"size": 9, "_type_name": "DTSZ", "type_tag": "111",
                        "map": "111PPDDD DDDDDDDD DDDDDDDD DDTTTTTT TTTTTTTT TTTSSSSS SSSSSSSS SSSSSSSZ ZZZZZZ00"}
-    TYPE_DTSZ_NANO = {"size": 10, "type_name": "DTSZ", "type_tag": "111",
+    TYPE_DTSZ_NANO = {"size": 10, "_type_name": "DTSZ", "type_tag": "111",
                       "map": "111PPDDD DDDDDDDD DDDDDDDD DDTTTTTT TTTTTTTT TTTSSSSS SSSSSSSS SSSSSSSS SSSSSSSS SZZZZZZZ"}
-    TYPE_DTSZ_NONE = {"size": 6, "type_name": "DTSZ", "type_tag": "111",
+    TYPE_DTSZ_NONE = {"size": 6, "_type_name": "DTSZ", "type_tag": "111",
                       "map": "111PPDDD DDDDDDDD DDDDDDDD DDTTTTTT TTTTTTTT TTTZZZZZ ZZ000000"}
 
     @staticmethod
@@ -53,17 +53,17 @@ class TypeUtils:
         >>> TypeUtils.type_name_2_type_tag('DTSZ')
         '111'
         """
-        tags = {TypeUtils.TYPE_D["type_name"]:
+        tags = {TypeUtils.TYPE_D["_type_name"]:
                     TypeUtils.TYPE_D["type_tag"],
-                TypeUtils.TYPE_T["type_name"]:
+                TypeUtils.TYPE_T["_type_name"]:
                     TypeUtils.TYPE_T["type_tag"],
-                TypeUtils.TYPE_DT["type_name"]:
+                TypeUtils.TYPE_DT["_type_name"]:
                     TypeUtils.TYPE_DT["type_tag"],
-                TypeUtils.TYPE_DTS_NONE["type_name"]:
+                TypeUtils.TYPE_DTS_NONE["_type_name"]:
                     TypeUtils.TYPE_DTS_NONE["type_tag"],
-                TypeUtils.TYPE_DTZ["type_name"]:
+                TypeUtils.TYPE_DTZ["_type_name"]:
                     TypeUtils.TYPE_DTZ["type_tag"],
-                TypeUtils.TYPE_DTSZ_NONE["type_name"]:
+                TypeUtils.TYPE_DTSZ_NONE["_type_name"]:
                     TypeUtils.TYPE_DTSZ_NONE["type_tag"]
                 }
         return tags[type]
@@ -90,17 +90,17 @@ class TypeUtils:
         'DTSZ'
         """
         tags = {TypeUtils.TYPE_D["type_tag"]:
-                    TypeUtils.TYPE_D["type_name"],
+                    TypeUtils.TYPE_D["_type_name"],
                 TypeUtils.TYPE_T["type_tag"]:
-                    TypeUtils.TYPE_T["type_name"],
+                    TypeUtils.TYPE_T["_type_name"],
                 TypeUtils.TYPE_DT["type_tag"]:
-                    TypeUtils.TYPE_DT["type_name"],
+                    TypeUtils.TYPE_DT["_type_name"],
                 TypeUtils.TYPE_DTS_NONE["type_tag"]:
-                    TypeUtils.TYPE_DTS_NONE["type_name"],
+                    TypeUtils.TYPE_DTS_NONE["_type_name"],
                 TypeUtils.TYPE_DTZ["type_tag"]:
-                    TypeUtils.TYPE_DTZ["type_name"],
+                    TypeUtils.TYPE_DTZ["_type_name"],
                 TypeUtils.TYPE_DTSZ_NONE["type_tag"]:
-                    TypeUtils.TYPE_DTSZ_NONE["type_name"]
+                    TypeUtils.TYPE_DTSZ_NONE["_type_name"]
                 }
         return tags[type_tag]
 
@@ -140,11 +140,11 @@ class TypeUtils:
         moment = temporenc.unpackb(byte_str)
 
         if byte_str_len == 3 and moment._has_date:
-            component = TypeUtils.TYPE_D["type_name"]
+            component = TypeUtils.TYPE_D["_type_name"]
         if byte_str_len == 3 and moment._has_time:
-            component = TypeUtils.TYPE_T["type_name"]
+            component = TypeUtils.TYPE_T["_type_name"]
         if byte_str_len == 5:
-            component = TypeUtils.TYPE_DT["type_name"]
+            component = TypeUtils.TYPE_DT["_type_name"]
 
         if byte_str_len > 5:
             if moment.tz_offset is None: component = "DTS"
@@ -188,13 +188,13 @@ class TypeUtils:
     @staticmethod
     def isValidTypeName(type_name):
         """
-        Validates that a string is a sub second type_name name in the
+        Validates that a string is a sub second _type_name name in the
         dictionary: D, T, DT, DTZ, DTS, and DTSZ. Validation
         is case-sensative so 'none' will return True; while 'NONE', 'None', and
         'NoNe' will return False.
         :param type_name: a string to validate
         :type type_name: string
-        :return: True if type_name is a valid sub second type_name,
+        :return: True if _type_name is a valid sub second _type_name,
                  otherwise False.
         :rtype:
 
