@@ -1,7 +1,8 @@
 import unittest
 
 from temporencUtils.components.tests.baseComponent_test import BaseComponentTest
-from temporencUtils.components.tests.component_s_test import ComponentSTest
+from temporencUtils.components.tests.component_sub_second_test \
+    import SubSecondComponentTest
 
 verbosity = 2  # 0 is quiet; 2 lists tests as run
 
@@ -12,7 +13,7 @@ if __name__ == "__main__":
     base_component_test_suite = unittest.TestLoader() \
         .loadTestsFromTestCase(BaseComponentTest)
     type_s_test_suite = unittest.TestLoader() \
-        .loadTestsFromTestCase(ComponentSTest)
+        .loadTestsFromTestCase(SubSecondComponentTest)
 
     #  suites to test
     suites = [base_component_test_suite, type_s_test_suite]

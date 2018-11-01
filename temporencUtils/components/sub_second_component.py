@@ -4,7 +4,7 @@ from temporencUtils.components.baseComponent import BaseComponent
 from temporencUtils.types.typeUtils import TypeUtils
 
 
-class ComponentS(BaseComponent):
+class SubSecondComponent(BaseComponent):
 
     # inherited from BaseType
     # _byte_str = None
@@ -141,8 +141,8 @@ class ComponentS(BaseComponent):
                     "milliseconds": None,
                     "nanoseconds": None}
             }}
+        data = template["s"]
         if self.precision_tag() != TypeUtils.PRECISION_TAGS["none"]:
-            data = template["s"]
             data["binary"]["milliseconds"] = self.binary_millisecond()
             data["binary"]["microseconds"] = self.binary_microsecond()
             data["binary"]["nanoseconds"] = self.binary_nanosecond()

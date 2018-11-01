@@ -2,12 +2,12 @@ import unittest
 
 from mock import MagicMock
 
-from temporencUtils.components.component_s import ComponentS
+from temporencUtils.components.sub_second_component import SubSecondComponent
 from temporencUtils.temporencUtils import TemporencUtils
 from temporencUtils.types.typeUtils import TypeUtils
 
 
-class ComponentSTest(unittest.TestCase):
+class SubSecondComponentTest(unittest.TestCase):
     COMPONENT_S_OBJS = [
         {"type": TypeUtils.TYPE_DTS_MILLI["_type_name"][:3],
          "byte_str": TemporencUtils.packb(
@@ -18,7 +18,7 @@ class ComponentSTest(unittest.TestCase):
             tz_offset=None)}]
 
     def test_precision(self):
-        typeS = ComponentS(ComponentSTest.COMPONENT_S_OBJS[0]["byte_str"])
+        typeS = SubSecondComponent(SubSecondComponentTest.COMPONENT_S_OBJS[0]["byte_str"])
         data = (('abcdefghij', "00"), ('abcdefghijabcdefghij', "01"),
                 ('abcdefghijabcdefghijabcdefghij', "10"), ('', "11"))
         for pair in data:
@@ -40,9 +40,10 @@ class ComponentSTest(unittest.TestCase):
                     '"microseconds": "00000000000001111011"}, ' +
                     '"precision name": "millisecond", "value": "123"}}'}]
         for pair in data:
-            actual = ComponentS(pair["byte_string"])
+            actual = SubSecondComponent(pair["byte_string"])
             expected = pair["expected"]
             self.assertEqual(actual.as_json(), expected)
+
 
 if __name__ == '__main__':
     # noinspection PyUnresolvedReferences
