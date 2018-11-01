@@ -1,17 +1,17 @@
 import json
 
-from temporencUtils.types.baseType import BaseType, TypeUtils
-from temporencUtils.temporencUtils import TemporencUtils
+from temporencUtils.components.baseComponent import BaseComponent
+from temporencUtils.types.typeUtils import TypeUtils
 
 
-class TypeS(BaseType):
+class ComponentS(BaseComponent):
 
     # inherited from BaseType
     # _byte_str = None
 
     def __init__(self, byte_str):
         # raises ValueError if unable to pack
-        BaseType.__init__(self, byte_str)
+        BaseComponent.__init__(self, byte_str)
         self._binary = TypeUtils.parse_component_s(byte_str)
         self._type_name = TypeUtils.byte_str_2_type_name(byte_str)
         self._type_tag = TypeUtils.type_name_2_type_tag(self._type_name)
@@ -104,7 +104,7 @@ class TypeS(BaseType):
         """
         return self._binary
 
-    def asJson(self, verbose=False):
+    def as_json(self, verbose=False):
         """
         Returns date information
         :param verbose: include full type information when True;
@@ -113,47 +113,40 @@ class TypeS(BaseType):
         :return: JSON formatted string
         :rtype: string
 
-        # Millesecond
-        >>> obj = TemporencUtils.packb(\
-                      value=None, type=None, year=None, month=None,\
-                      day=None, hour=None, minute=None, second=None,\
-                      millisecond=123, microsecond=None, nanosecond=None,\
-                      tz_offset=None)
-        >>> typeD = TypeS(obj)
-
-        >>> typeD.asJson() == typeD.asJson(False)
-        True
-        >>> typeD.asJson()
-        '{"s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}}'
-
-        >>> typeD.asJson(verbose=True)
-        '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
+        # # Millesecond
+        # >>> obj = TemporencUtils.packb(\
+        #               value=None, type=None, year=None, month=None,\
+        #               day=None, hour=None, minute=None, second=None,\
+        #               millisecond=123, microsecond=None, nanosecond=None,\
+        #               tz_offset=None)
+        # >>> typeD = TypeS(obj)
+        #
+        # >>> typeD.asJson() == typeD.asJson(False)
+        # True
+        # >>> typeD.asJson()
+        # '{"s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}}'
+        #
+        # >>> typeD.asJson(verbose=True)
+        # '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
 
         """
+        idx = int(self.precision_tag())
+        precision_name = TypeUtils.PRECISION_TAGS.keys()[idx]
         template = {
             "s": {
-                "precision name":
-                    TypeUtils.PRECISION_TAGS.keys()
-                    [TypeUtils.PRECISION_TAGS.values()
-                        .index(self.precision_tag())],
-                "precision tag": self.precision_tag(),
-                "value": "",
+                "precision name": precision_name,
+                "value": str(self._value),
                 "binary": {
                     "microseconds": None,
                     "milliseconds": None,
                     "nanoseconds": None}
             }}
-        data = template["s"]
         if self.precision_tag() != TypeUtils.PRECISION_TAGS["none"]:
-            data["value"] = str(self._value)
+            data = template["s"]
             data["binary"]["milliseconds"] = self.binary_millisecond()
             data["binary"]["microseconds"] = self.binary_microsecond()
             data["binary"]["nanoseconds"] = self.binary_nanosecond()
-
-        if verbose:
-            verbose_temp = json.loads(BaseType.asJson(self))
-            key = verbose_temp.keys()[0]
-            verbose_temp[key][u"s"] = template["s"]
-            template = verbose_temp
-
+            template['s'] = data
+        base_template = json.loads(BaseComponent.as_json(self))
+        base_template['s'] = data
         return json.dumps(template)
