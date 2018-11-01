@@ -68,30 +68,9 @@ class BaseType:
                 "bytes": "",
                 "hex": "",
                 "moment": "None",
-                "d": {
-                    # "year": "None",
-                    # "month": "None",
-                    # "day": "None",
-                    # "binary": {
-                    #     "year": "None",
-                    #     "month": "None",
-                    #     "day": "None"}
-                },
-                "t": {
-                    # "hour": "None",
-                    # "minute": "None",
-                    # "second": "None",
-                    # "binary": {
-                    #     "hour": "None",
-                    #     "minute": "None",
-                    #     "second": "None"}
-                },
-                "s": {
-                    # "binary": {
-                    #     "millisecond": "None",
-                    #     "microsecond": "None",
-                    #     "nanosecond": "None"}
-                },
+                "d": {},
+                "t": {},
+                "s": {},
                 "z": "None",
             }}
 
