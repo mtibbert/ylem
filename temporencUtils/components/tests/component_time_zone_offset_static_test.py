@@ -8,6 +8,36 @@ from temporencUtils.components.time_zone_offset_component import \
 
 class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
 
+    # static constants
+
+    def test_min(self):
+        self.assertEquals(Obj4Test.MIN,
+                          TimeZoneOffsetComponentStaticTest.MIN)
+    def test_max(self):
+        self.assertEquals(Obj4Test.MAX,
+                          TimeZoneOffsetComponentStaticTest.MAX)
+
+    def test_tz_not_utc(self):
+        self.assertEquals(Obj4Test.TZ_NOT_UTC,
+                          TimeZoneOffsetComponentStaticTest.TZ_NOT_UTC)
+
+    def test_not_set(self):
+        self.assertEquals(Obj4Test.NOT_SET,
+                          TimeZoneOffsetComponentStaticTest.NOT_SET)
+
+    def test_increment_size(self):
+        self.assertEquals(Obj4Test.INCREMENT_SIZE,
+                          TimeZoneOffsetComponentStaticTest.INCREMENT_SIZE)
+
+    def test_bit_len(self):
+        self.assertEquals(Obj4Test.BIT_LEN,
+                          TimeZoneOffsetComponentStaticTest.BIT_LEN)
+
+    def test_offset(self):
+        self.assertEquals(Obj4Test.OFFSET_INCREMENT,
+                          TimeZoneOffsetComponentStaticTest.OFFSET_INCREMENT)
+
+
     # static methods
 
     def test_encode(self):
