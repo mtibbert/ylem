@@ -25,33 +25,38 @@ class TimeZoneOffsetComponent:
         self._binary = bin(offset)[2:].zfill(self.BIT_LEN)
 
     @staticmethod
-    def decode(hex_or_decimal):
+    def decode(hex_or_decimal, to_minutes=False):
         decoded = None
         dec_encoded = None
         len_check = len(str(hex_or_decimal).lstrip("0")) <= \
                     TimeZoneOffsetComponent.BIT_LEN
         if type(hex_or_decimal).__name__ == "str" and len_check:
             dec_encoded = int(hex_or_decimal, 2)
+            if to_minutes and dec_encoded is not None:
+                dec_encoded = ((dec_encoded -
+                                TimeZoneOffsetComponent.OFFSET_INCREMENT) * 15)
         elif type(hex_or_decimal).__name__ == \
                 "int" and TimeZoneOffsetComponent.MIN \
                 <= hex_or_decimal \
                 <= TimeZoneOffsetComponent.MAX:
-                dec_encoded = hex_or_decimal - \
-                              TimeZoneOffsetComponent.OFFSET_INCREMENT
+            dec_encoded = hex_or_decimal - \
+                          TimeZoneOffsetComponent.OFFSET_INCREMENT
+            if to_minutes:
+                dec_encoded = (dec_encoded * 15)
 
         if dec_encoded is not None:
             decoded = dec_encoded
 
         return decoded
 
-    @staticmethod
-    def decode_as_minutes(hex_or_decimal):
-        value = TimeZoneOffsetComponent.decode(hex_or_decimal)
-        if value is not None:
-            value = (value
-                     - TimeZoneOffsetComponent.OFFSET_INCREMENT) \
-                     * TimeZoneOffsetComponent.INCREMENT_SIZE
-        return value
+    # @staticmethod
+    # def decode_as_minutes(hex_or_decimal):
+    #     value = TimeZoneOffsetComponent.decode(hex_or_decimal)
+    #     if value is not None:
+    #         value = (value
+    #                  - TimeZoneOffsetComponent.OFFSET_INCREMENT) \
+    #                  * TimeZoneOffsetComponent.INCREMENT_SIZE
+    #     return value
 
     @staticmethod
     def encode_minutes_of_offset(encode_minutes_of_offset, asHex=False):
