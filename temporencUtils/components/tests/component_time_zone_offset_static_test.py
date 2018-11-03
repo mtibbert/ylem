@@ -1,28 +1,14 @@
 import unittest
 # Object under Test
+from temporencUtils.components.tests.base_time_zone_offset_component_test import \
+    TimeZoneOffsetComponentBaseTest
 from temporencUtils.components.time_zone_offset_component import \
     TimeZoneOffsetComponent as Obj4Test
 
 
-class TimeZoneOffsetComponentStaticTest(unittest.TestCase):
-    MIN = 0
-    MAX = 125
-    TZ_NOT_UTC = 126
-    NOT_SET = 127
-    INCREMENT_SIZE = 15
-    OFFSET_INCREMENT = 64
-    BIT_LEN = 7
-    DATA_PROVIDER = None
+class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
 
     # static methods
-
-    def setUp(self):
-        TimeZoneOffsetComponentStaticTest.DATA_PROVIDER =\
-            [[0, 0, 64, "1000000"],
-             [60, 4, 68, "1000100"],
-             [-360, -24, 40, "0101000"],
-             [-150, -10, 54, "0110110"],
-             [360, 24, 88, "1011000"]]
 
     def test_encode(self):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER

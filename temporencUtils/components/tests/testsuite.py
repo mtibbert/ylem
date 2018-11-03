@@ -1,9 +1,9 @@
 import unittest
 
-from temporencUtils.components.tests.baseComponent_test import BaseComponentTest
+from temporencUtils.components.tests.base_component_test import BaseComponentTest
 from temporencUtils.components.tests.component_sub_second_test \
     import SubSecondComponentTest
-from temporencUtils.components.tests.time_zone_offset_component_static_test import \
+from temporencUtils.components.tests.component_time_zone_offset_static_test import \
     TimeZoneOffsetComponentStaticTest
 # from temporencUtils.components.tests.time_zone_offset_component_test import \
 #     TimeZoneOffsetComponentTest
@@ -11,9 +11,7 @@ from temporencUtils.components.tests.time_zone_offset_component_static_test impo
 verbosity = 2  # 0 is quiet; 2 lists tests as run
 
 
-if __name__ == "__main__":
-
-    # Make individual suites for test cases
+if __name__ == "__main__":    # Make individual suites for test cases
     base_component_test_suite = unittest.TestLoader() \
         .loadTestsFromTestCase(BaseComponentTest)
     type_s_test_suite = unittest.TestLoader() \
@@ -33,3 +31,5 @@ if __name__ == "__main__":
     # run the suites
     suite = unittest.TestSuite(suites)
     unittest.TextTestRunner(verbosity=verbosity).run(suite)
+
+
