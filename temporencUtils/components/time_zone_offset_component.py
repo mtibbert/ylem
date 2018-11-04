@@ -10,19 +10,37 @@ class TimeZoneOffsetComponent:
     INCREMENT_SIZE = 15
     OFFSET_INCREMENT = 64
     BIT_LEN = 7
+    _binary = None
 
-    def __init__(self, offset=0, encode=False):
-        self.minutes = (offset - self.OFFSET_INCREMENT)*15
+    def __init__(self, increments=0, encode=False):
+        decimal_offset = increments + self.__class__.OFFSET_INCREMENT
         if encode:
-            self.minutes = offset
-            offset = self.encode_minutes_of_offset(offset)
-        if self.MIN <= offset <= self.NOT_SET:
-            self.encoded_offset = offset
+            increments = increments / self.__class__.INCREMENT_SIZE
+            decimal_offset = increments + self.__class__.OFFSET_INCREMENT
+        if self.MIN <= decimal_offset <= self.NOT_SET:
+            raw_binary = bin(decimal_offset)
+            # Remove _binary tag and pad with leading zeros
+            self._binary = raw_binary[2:].zfill(self.__class__.BIT_LEN)
         else:
-            msg = "The offset {arg} is not in the range {lower} to {upper}"\
-                .format(arg=offset, lower=self.MIN, upper=self.NOT_SET)
+            msg = "The increments {arg} is not in the range {lower} to {upper}"\
+                .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
             raise ValueError(msg)
-        self._binary = bin(offset)[2:].zfill(self.BIT_LEN)
+
+
+
+        # self.minutes = (increments * 15)
+        # if encode:
+        #     self.minutes = increments
+        #     increments = (increments / 15)
+        # if self.MIN <= increments <= self.NOT_SET:
+        #     self.encoded_offset = self.__class__.decode(increments)
+        # else:
+        #     msg = "The increments {arg} is not in the range {lower} to {upper}"\
+        #         .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
+        #     raise ValueError(msg)
+        # self._binary = bin(increments)[2:].zfill(self.BIT_LEN)
+
+    #  static methods
 
     @staticmethod
     def decode(hex_or_decimal, to_minutes=False):
@@ -49,15 +67,6 @@ class TimeZoneOffsetComponent:
 
         return decoded
 
-    # @staticmethod
-    # def decode_as_minutes(hex_or_decimal):
-    #     value = TimeZoneOffsetComponent.decode(hex_or_decimal)
-    #     if value is not None:
-    #         value = (value
-    #                  - TimeZoneOffsetComponent.OFFSET_INCREMENT) \
-    #                  * TimeZoneOffsetComponent.INCREMENT_SIZE
-    #     return value
-
     @staticmethod
     def encode_minutes_of_offset(encode_minutes_of_offset, asHex=False):
         offset = (encode_minutes_of_offset / 15) + \
@@ -66,16 +75,18 @@ class TimeZoneOffsetComponent:
             offset = (bin(offset))[2:].zfill(TimeZoneOffsetComponent.BIT_LEN)
         return offset
 
-    # def encode_minutes_of_offset(self, minutes):
-    #     return TimeZoneOffsetComponent.encode_minutes_of_offset(minutes)
+    # instance methods
 
     def as_binary(self):
         """
-        Returns binary representation
-        :return: binary string
+        Returns _binary representation
+        :return: _binary string
         :rtype: string
         """
         return self._binary
+
+    # def as_minutes(self):
+    #     return self.__class__.decode(self.as_binary(), to_minutes=True)
 
     def as_json(self, verbose=False):
         """
@@ -97,10 +108,10 @@ class TimeZoneOffsetComponent:
         # >>> typeD.asJson() == typeD.asJson(False)
         # True
         # >>> typeD.asJson()
-        # '{"s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}}'
+        # '{"s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "_binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}}'
         #
         # >>> typeD.asJson(verbose=True)
-        # '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
+        # '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "_binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
 
         """
         template = "{}"
@@ -110,16 +121,16 @@ class TimeZoneOffsetComponent:
         #     "s": {
         #         "precision name": precision_name,
         #         "value": str(self._value),
-        #         "binary": {
+        #         "_binary": {
         #             "microseconds": None,
         #             "milliseconds": None,
         #             "nanoseconds": None}
         #     }}
         # data = template["s"]
         # if self.precision_tag() != TypeUtils.PRECISION_TAGS["none"]:
-        #     data["binary"]["milliseconds"] = self.binary_millisecond()
-        #     data["binary"]["microseconds"] = self.binary_microsecond()
-        #     data["binary"]["nanoseconds"] = self.binary_nanosecond()
+        #     data["_binary"]["milliseconds"] = self.binary_millisecond()
+        #     data["_binary"]["microseconds"] = self.binary_microsecond()
+        #     data["_binary"]["nanoseconds"] = self.binary_nanosecond()
         #     template['s'] = data
         # base_template = json.loads(BaseComponent.as_json(self))
         # base_template['s'] = data
