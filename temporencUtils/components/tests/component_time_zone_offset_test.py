@@ -58,6 +58,26 @@ class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
                                arg=offset, lower=self.MIN, upper=self.NOT_SET)
                 self.assertEqual(the_exception.message, expected)
 
+    def test_ctor_special_not_utc(self):
+        expected = str(int(bin(Obj4Test.TZ_NOT_UTC)[2:]))
+        for offset in range(930, 945):
+            obj = Obj4Test(offset, encode=True)
+            actual = obj.as_binary()
+            msg = "The offset {offset} is not " + \
+                  "in the range {lower} to {upper}".format(
+                      arg=offset, lower=self.MIN, upper=self.NOT_SET)
+            self.assertEqual(actual, expected, msg=msg)
+
+    def test_ctor_special_not_set(self):
+        expected = str(int(bin(Obj4Test.NOT_SET)[2:]))
+        for offset in range(945, 960):
+            obj = Obj4Test(offset, encode=True)
+            actual = obj.as_binary()
+            msg = "The offset {offset} is not " + \
+                  "in the range {lower} to {upper}".format(
+                      arg=offset, lower=self.MIN, upper=self.NOT_SET)
+            self.assertEqual(actual, expected, msg=msg)
+
     # # dp format [0 = minutes, 1 = increments, 2 = decimal, 3 = hex]
     #
     # def test_as_binary(self):

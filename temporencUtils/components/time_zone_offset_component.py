@@ -13,6 +13,23 @@ class TimeZoneOffsetComponent:
     _binary = None
 
     def __init__(self, increments=0, encode=False):
+        """
+        Constructor.
+        :param increments: The number of increments offset from UTC in the
+                           range of -64 to 61.  Increment 62 (930-944 minutes)
+                           indicates that this value does carry time zone
+                           information, but that it is not expressed as an
+                           embedded UTC offset. Increment 63 (945-959 minutes)
+                           indicates no value is set. One increment equates to
+                           15 minutes of offset.
+        :type increments:  an integer value within the range -64 to +63
+        :param encode:     a boolean value, True if the increments value
+                           represents minutes to be encoded, or False (default)
+                           when encoding is not required.
+        :type encode:      bool
+        :raise ValueError: A ValueError is raised when the increments value is
+                           outside the range -64 to +63
+        """
         decimal_offset = increments + self.__class__.OFFSET_INCREMENT
         if encode:
             increments = increments / self.__class__.INCREMENT_SIZE
@@ -22,6 +39,7 @@ class TimeZoneOffsetComponent:
             # Remove _binary tag and pad with leading zeros
             self._binary = raw_binary[2:].zfill(self.__class__.BIT_LEN)
         else:
+            # Todo: See Issue #11: Grammar Error in Error message
             msg = "The increments {arg} is not in the range {lower} to {upper}"\
                 .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
             raise ValueError(msg)
