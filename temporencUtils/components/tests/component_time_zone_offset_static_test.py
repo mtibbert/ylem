@@ -49,10 +49,10 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
                 .format(actual=actual, expected=expected, item=item[2])
             self.assertEquals(actual, expected, msg=msg)
 
-    def test_encode_as_hex_is_true(self):
+    def test_encode_as_bin_is_true(self):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
-            actual = Obj4Test.encode_minutes_of_offset(item[0], asHex=True)
+            actual = Obj4Test.encode_minutes_of_offset(item[0], as_bin=True)
             expected = item[3]
             self.assertEquals(actual, expected,
                               msg=(actual + " != " + expected + " " +
@@ -62,10 +62,10 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             expected = item[0]
-            #  Encode as Hex
-            hex = Obj4Test.encode_minutes_of_offset(item[0], asHex=True)
+            #  Encode as Binary
+            bin = Obj4Test.encode_minutes_of_offset(item[0], as_bin=True)
             # Decode minutes
-            actual = Obj4Test.decode(hex, to_minutes=True)
+            actual = Obj4Test.decode(bin, as_minutes=True)
             msg = "{actual} != {expected} for {item}" \
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertTrue(actual == expected, msg=msg)
@@ -75,7 +75,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
         for item in dp:
             actual = Obj4Test.decode(item[2])
             # Check default (to_minutes=False) matches
-            expected = Obj4Test.decode(item[2], to_minutes=False)
+            expected = Obj4Test.decode(item[2], as_minutes=False)
             msg = "{actual} != {expected} for {item} when to_minutes=False" \
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertEquals(actual, expected, msg=msg)
@@ -88,18 +88,18 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
     def test_decode_dec_to_minutes(self):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
-            actual = Obj4Test.decode(item[2], to_minutes=True)
+            actual = Obj4Test.decode(item[2], as_minutes=True)
             expected = item[0]
             msg = "{actual} != {expected} for {item}" \
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertEquals(actual, expected, msg=msg)
 
-    def test_decode_hex_to_decimal(self):
+    def test_decode_bin_to_decimal(self):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.decode(item[3])
             # Check default (to_minutes=False) matches
-            expected = Obj4Test.decode(item[3], to_minutes=False)
+            expected = Obj4Test.decode(item[3], as_minutes=False)
             msg = "{actual} != {expected} for {item} when to_minutes=False" \
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertEquals(actual, expected, msg=msg)
@@ -109,16 +109,16 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertEquals(actual, expected, msg=msg)
 
-    def test_decode_hex_to_minutes(self):
+    def test_decode_bin_to_minutes(self):
         dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
-            actual = Obj4Test.decode(item[3], to_minutes=True)
+            actual = Obj4Test.decode(item[3], as_minutes=True)
             expected = item[0]
             msg = "{actual} != {expected} for {item}" \
                 .format(actual=actual, expected=expected, item=item[3])
             self.assertEquals(actual, expected, msg=msg)
 
-    def test_decode_to_decimal_hex_leading_zeros(self):
+    def test_decode_to_decimal_bin_leading_zeros(self):
         dp = [['01000000', 64]]
         for item in dp:
 
@@ -128,7 +128,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
                 .format(actual=actual, expected=expected, item=item)
             self.assertEquals(actual, expected, msg=msg)
 
-    def test_decode_to_decimal_invalid_hex(self):
+    def test_decode_to_decimal_invalid_bin(self):
         dp = ['10000000']
         for item in dp:
             actual = Obj4Test.decode(item)

@@ -44,40 +44,26 @@ class TimeZoneOffsetComponent:
                 .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
             raise ValueError(msg)
 
-
-
-        # self.minutes = (increments * 15)
-        # if encode:
-        #     self.minutes = increments
-        #     increments = (increments / 15)
-        # if self.MIN <= increments <= self.NOT_SET:
-        #     self.encoded_offset = self.__class__.decode(increments)
-        # else:
-        #     msg = "The increments {arg} is not in the range {lower} to {upper}"\
-        #         .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
-        #     raise ValueError(msg)
-        # self._binary = bin(increments)[2:].zfill(self.BIT_LEN)
-
     #  static methods
 
     @staticmethod
-    def decode(hex_or_decimal, to_minutes=False):
+    def decode(bin_or_decimal, as_minutes=False):
         decoded = None
         dec_encoded = None
-        len_check = len(str(hex_or_decimal).lstrip("0")) <= \
+        len_check = len(str(bin_or_decimal).lstrip("0")) <= \
                     TimeZoneOffsetComponent.BIT_LEN
-        if type(hex_or_decimal).__name__ == "str" and len_check:
-            dec_encoded = int(hex_or_decimal, 2)
-            if to_minutes and dec_encoded is not None:
+        if type(bin_or_decimal).__name__ == "str" and len_check:
+            dec_encoded = int(bin_or_decimal, 2)
+            if as_minutes and dec_encoded is not None:
                 dec_encoded = ((dec_encoded -
                                 TimeZoneOffsetComponent.OFFSET_INCREMENT) * 15)
-        elif type(hex_or_decimal).__name__ == \
+        elif type(bin_or_decimal).__name__ == \
                 "int" and TimeZoneOffsetComponent.MIN \
-                <= hex_or_decimal \
+                <= bin_or_decimal \
                 <= TimeZoneOffsetComponent.MAX:
-            dec_encoded = hex_or_decimal - \
+            dec_encoded = bin_or_decimal - \
                           TimeZoneOffsetComponent.OFFSET_INCREMENT
-            if to_minutes:
+            if as_minutes:
                 dec_encoded = (dec_encoded * 15)
 
         if dec_encoded is not None:
@@ -86,10 +72,10 @@ class TimeZoneOffsetComponent:
         return decoded
 
     @staticmethod
-    def encode_minutes_of_offset(encode_minutes_of_offset, asHex=False):
+    def encode_minutes_of_offset(encode_minutes_of_offset, as_bin=False):
         offset = (encode_minutes_of_offset / 15) + \
                   TimeZoneOffsetComponent.OFFSET_INCREMENT
-        if asHex:
+        if as_bin:
             offset = (bin(offset))[2:].zfill(TimeZoneOffsetComponent.BIT_LEN)
         return offset
 
@@ -98,58 +84,79 @@ class TimeZoneOffsetComponent:
     def as_binary(self):
         """
         Returns _binary representation
-        :return: _binary string
+        :return: _binary string 7 bits in length
         :rtype: string
         """
         return self._binary
 
-    # def as_minutes(self):
-    #     return self.__class__.decode(self.as_binary(), to_minutes=True)
-
-    def as_json(self, verbose=False):
+    def as_minutes(self):
         """
-        Returns date information
-        :param verbose: include full type information when True;
-                        when False (default), only date information is included.
-        :type verbose: boolean
+        Returns the value as minutes.
+        :return: if the value is a valid UTC value, return the value as minutes
+                 in the range -960 to 930. If not set, None returned
+        :rtype: int | None
+        """
+        minutes = self.__class__.decode(self.as_binary(), as_minutes=True)
+        if self.is_valid() and not self.is_not_set(): return minutes
+        else: return None
+
+    def as_json(self):
+        """
+        Returns date information in JSON notation.
+        {
+            "z": {
+                "binary": "",
+                "decimal": "",
+                "increments": "",
+                "minutes": ""
+            }
+        }
         :return: JSON formatted string
         :rtype: string
-
-        # # Millesecond
-        # >>> obj = TemporencUtils.packb(\
-        #               value=None, type=None, year=None, month=None,\
-        #               day=None, hour=None, minute=None, second=None,\
-        #               millisecond=123, microsecond=None, nanosecond=None,\
-        #               tz_offset=None)
-        # >>> typeD = TypeS(obj)
-        #
-        # >>> typeD.asJson() == typeD.asJson(False)
-        # True
-        # >>> typeD.asJson()
-        # '{"s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "_binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}}'
-        #
-        # >>> typeD.asJson(verbose=True)
-        # '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "_binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
-
         """
-        template = "{}"
-        # idx = int(self.precision_tag())
-        # precision_name = TypeUtils.PRECISION_TAGS.keys()[idx]
-        # template = {
-        #     "s": {
-        #         "precision name": precision_name,
-        #         "value": str(self._value),
-        #         "_binary": {
-        #             "microseconds": None,
-        #             "milliseconds": None,
-        #             "nanoseconds": None}
-        #     }}
-        # data = template["s"]
-        # if self.precision_tag() != TypeUtils.PRECISION_TAGS["none"]:
-        #     data["_binary"]["milliseconds"] = self.binary_millisecond()
-        #     data["_binary"]["microseconds"] = self.binary_microsecond()
-        #     data["_binary"]["nanoseconds"] = self.binary_nanosecond()
-        #     template['s'] = data
-        # base_template = json.loads(BaseComponent.as_json(self))
-        # base_template['s'] = data
+        template = {
+            "z": {
+                "binary": str(self.as_binary()),
+                "decimal": str(self.__class__.decode(self.as_binary())),
+                "increments": str(self.__class__.decode(self.as_binary()) -
+                                  self.__class__.OFFSET_INCREMENT),
+                "minutes": str(self.as_minutes())
+            }}
         return json.dumps(template)
+
+    def is_not_set(self):
+        return self.__class__.decode(self.as_binary()) == \
+               self.__class__.NOT_SET
+
+    def is_tzinfo_not_utc_info(self):
+        """
+        Returns True if this value does carry time zone information, but that
+        it is not expressed as an embedded UTC offset
+        :return: True if this value does carry time zone information, but that
+                 it is not expressed as an embedded UTC offset
+        :rtype: bool
+        """
+        return self.__class__.decode(self.as_binary()) == \
+               self.__class__.TZ_NOT_UTC
+
+    def is_utc(self):
+        """
+        Returns true if the time zone data reflects UTC information. False is
+        returned when the time zone data does not reflect UTC information, or
+        is not set.
+        :return: Returns true if the time zone data reflects UTC information.
+        :rtype:
+        """
+        return self.__class__.MIN <= \
+               self.__class__.decode(self.as_binary()) < \
+               self.__class__.TZ_NOT_UTC
+
+    def is_valid(self):
+        """
+        Returns true if the TZ Info object contains valid data.
+        :return: Returns true if the TZ Info object contains valid data.
+        :rtype: bool
+        """
+        return self.__class__.decode(self.as_binary()) in \
+               range(self.__class__.MIN, self.__class__.NOT_SET + 1)
+
