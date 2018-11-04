@@ -225,7 +225,6 @@ class TypeUtilsTest(unittest.TestCase):
         for temporenc_type in ("D", "T", "DT", "DTZ", "DTS", "DTSZ"):
             self.assertTrue(TypeUtils.isValidTypeName(temporenc_type))
 
-
 if __name__ == '__main__':
     # noinspection PyUnresolvedReferences
     unittest.main()
