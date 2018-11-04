@@ -12,7 +12,7 @@ class BaseComponentTest(unittest.TestCase):
             "s": {
                 "precision name": "",
                 "value": "",
-                "binary": {
+                "_binary": {
                     "microseconds": "",
                     "milliseconds": "",
                     "nanoseconds": ""}
