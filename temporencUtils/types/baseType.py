@@ -45,21 +45,12 @@ class BaseType:
         moment = TemporencUtils.unpackb(byte_str)
         self._byte_str = byte_str
 
-    def asJson(self):
+    def as_json(self):
         """
-
+        Returns the JSON representation of the object
         :return: JSON formatted string
         :rtype: string
 
-        >>> obj = TemporencUtils.packb(\
-                      value=None, type=None, year=1983, month=None,\
-                      day=None, hour=None, minute=None, second=None,\
-                      millisecond=None, microsecond=None, nanosecond=None,\
-                      tz_offset=None)
-        >>> base = BaseType(obj)
-
-        >>> base.asJson()
-        '{"100011110111111111111111": {"bytes": "3", "moment": "1983-??-??", "d": {}, "hex": "8F7FFF", "type_tag": "100", "z": "None", "type": "D", "s": {}, "t": {}}}'
         """
         template = {
             "100011110111111111111111": {
