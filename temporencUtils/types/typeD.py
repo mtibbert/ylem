@@ -97,13 +97,13 @@ class TypeD(BaseType):
                       tz_offset=None)
         >>> typeD = TypeD(obj)
 
-        >>> typeD.asJson() == typeD.asJson(False)
+        >>> typeD.as_json() == typeD.as_json(False)
         True
-        >>> typeD.asJson()
+        >>> typeD.as_json()
         '{"d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}}'
 
-        >>> typeD.asJson(verbose=True)
-        '{"100011110111111111111111": {"d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}, "bytes": "3", "hex": "8F7FFF", "s": {}, "moment": "1983-??-??", "t": {}, "type_tag": "100", "z": "None", "type": "D"}}'
+        >>> typeD.as_json(verbose=True)
+        '{"8F7FFF": {"binary": "100011110111111111111111", "d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}, "bytes": "3", "s": {}, "moment": "1983-??-??", "t": {}, "type_tag": "100", "z": {}, "type": "D"}}'
 
         """
         template = {
@@ -130,7 +130,7 @@ class TypeD(BaseType):
             data["binary"]["day"] = self.binary_day()
 
         if verbose:
-            verbose_temp = json.loads(BaseType.asJson(self))
+            verbose_temp = json.loads(BaseType.as_json(self))
             key = verbose_temp.keys()[0]
             verbose_temp[key][u"d"] = template["d"]
             template = verbose_temp
