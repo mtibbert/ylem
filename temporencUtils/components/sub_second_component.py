@@ -35,7 +35,7 @@ class SubSecondComponent(BaseComponent):
         '0001111011'
 
         """
-        return self.asBinary().zfill(10)
+        return self.as_binary().zfill(10)
 
     def binary_microsecond(self):
         """
@@ -66,7 +66,7 @@ class SubSecondComponent(BaseComponent):
         '00000000000001111011'
 
         """
-        return self.asBinary().zfill(20)
+        return self.as_binary().zfill(20)
 
     def binary_nanosecond(self):
         """
@@ -86,7 +86,7 @@ class SubSecondComponent(BaseComponent):
         '000111010110111100110100010101'
 
         """
-        return self.asBinary().zfill(30)
+        return self.as_binary().zfill(30)
 
     def precision_tag(self):
         precision_tags = {
@@ -94,9 +94,9 @@ class SubSecondComponent(BaseComponent):
             "20": TypeUtils.PRECISION_TAGS["microsecond"],
             "30": TypeUtils.PRECISION_TAGS["nanosecond"],
             "0": TypeUtils.PRECISION_TAGS["none"]}
-        return precision_tags[str(len(self.asBinary()))]
+        return precision_tags[str(len(self.as_binary()))]
 
-    def asBinary(self):
+    def as_binary(self):
         """
         Returns binary representation
         :return: binary string

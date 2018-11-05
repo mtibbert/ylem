@@ -31,7 +31,7 @@ class TypeT(BaseType):
         '10010'
 
         """
-        return self.asBinary()[7:12]
+        return self.as_binary()[7:12]
 
 
     def binary_minute(self):
@@ -52,7 +52,7 @@ class TypeT(BaseType):
         '011001'
 
         """
-        return self.asBinary()[12:18]
+        return self.as_binary()[12:18]
 
     def binary_second(self):
         """
@@ -72,9 +72,9 @@ class TypeT(BaseType):
         '001100'
 
         """
-        return self.asBinary()[18:]
+        return self.as_binary()[18:]
 
-    def asBinary(self):
+    def as_binary(self):
         """
         Returns binary representation
         :return: binary string
@@ -82,7 +82,7 @@ class TypeT(BaseType):
         """
         return TemporencUtils.byte_str_2_bin_str(self._byte_str)
 
-    def asJson(self, verbose=False):
+    def as_json(self, verbose=False):
         """
         Returns date information
         :param verbose: include full type information when True;
@@ -91,22 +91,6 @@ class TypeT(BaseType):
         :return: JSON formatted string
         :rtype: string
 
-        # Check HH:MM:SS
-        >>> obj = TemporencUtils.packb(\
-                      value=None, type=None, year=None, month=None,\
-                      day=None, hour=18, minute=25, second=12,\
-                      millisecond=None, microsecond=None, nanosecond=None,\
-                      tz_offset=None)
-
-        >>> typeT = TypeT(obj)
-
-        >>> typeT.asJson() == typeT.asJson(False)
-        True
-        >>> typeT.asJson()
-        '{"t": {"binary": {"second": "001100", "minute": "011001", "hour": "10010"}, "second": "12", "minute": "25", "hour": "18"}}'
-
-        # Check HH:MM
-        # >>> typeT.asJson(verbose=True)
         >>> obj = TemporencUtils.packb(\
                       value=None, type=None, year=None, month=None,\
                       day=None, hour=18, minute=25, second=None,\
@@ -115,14 +99,14 @@ class TypeT(BaseType):
 
         >>> typeT = TypeT(obj)
 
-        >>> typeT.asJson() == typeT.asJson(False)
+        >>> typeT.as_json() == typeT.as_json(False)
         True
 
-        >>> typeT.asJson()
+        >>> typeT.as_json()
         '{"t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}}'
 
-        >>> typeT.asJson(verbose=True)
-        '{"101000010010011001111111": {"d": {}, "bytes": "3", "hex": "A1267F", "s": {}, "moment": "18:25:??", "t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}, "type_tag": "1010000", "z": "None", "type": "T"}}'
+        >>> typeT.as_json(verbose=True)
+        '{"A1267F": {"binary": "101000010010011001111111", "d": {}, "bytes": "3", "s": {}, "moment": "18:25:??", "t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}, "type_tag": "1010000", "z": {}, "type": "T"}}'
 
         """
         template = {
@@ -149,7 +133,7 @@ class TypeT(BaseType):
             data["binary"]["second"] = self.binary_second()
 
         if verbose:
-            verbose_temp = json.loads(BaseType.asJson(self))
+            verbose_temp = json.loads(BaseType.as_json(self))
             key = verbose_temp.keys()[0]
             verbose_temp[key][u"t"] = template["t"]
             template = verbose_temp
