@@ -217,13 +217,14 @@ class TypeUtilsTest(unittest.TestCase):
                 TypeUtils.type_tag_to_type_name(temporenc_type["type_tag"]),
                 temporenc_type["_type_name"])
 
-    def test_isValidPrecisionName(self):
+    def test_is_valid_precision_name(self):
         for ss in ("millisecond", "microsecond", "nanosecond", "none"):
-            self.assertTrue(TypeUtils.isValidPrecisionName(ss))
+            self.assertTrue(TypeUtils.is_valid_precision_name(ss))
 
-    def test_isValidTypeName(self):
+    def test_is_valid_type_name(self):
         for temporenc_type in ("D", "T", "DT", "DTZ", "DTS", "DTSZ"):
-            self.assertTrue(TypeUtils.isValidTypeName(temporenc_type))
+            self.assertTrue(TypeUtils.is_valid_type_name(temporenc_type))
+
 
 if __name__ == '__main__':
     # noinspection PyUnresolvedReferences
