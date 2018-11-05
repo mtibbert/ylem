@@ -31,7 +31,7 @@ class TypeD(BaseType):
         '11111'
 
         """
-        return self.asBinary()[19:]
+        return self.as_binary()[19:]
 
     def binary_month(self):
         """
@@ -51,7 +51,7 @@ class TypeD(BaseType):
         '1111'
 
         """
-        return self.asBinary()[15:19]
+        return self.as_binary()[15:19]
 
     def binary_year(self):
         """
@@ -71,9 +71,9 @@ class TypeD(BaseType):
         '011110111111'
 
         """
-        return self.asBinary()[3:15]
+        return self.as_binary()[3:15]
 
-    def asBinary(self):
+    def as_binary(self):
         """
         Returns binary representation
         :return: binary string
@@ -81,7 +81,7 @@ class TypeD(BaseType):
         """
         return TemporencUtils.byte_str_2_bin_str(self._byte_str)
 
-    def asJson(self, verbose=False):
+    def as_json(self, verbose=False):
         """
         Returns date information
         :param verbose: include full type information when True;
