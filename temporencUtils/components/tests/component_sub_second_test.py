@@ -22,7 +22,7 @@ class SubSecondComponentTest(unittest.TestCase):
         data = (('abcdefghij', "00"), ('abcdefghijabcdefghij', "01"),
                 ('abcdefghijabcdefghijabcdefghij', "10"), ('', "11"))
         for pair in data:
-            typeS.asBinary = MagicMock(return_value=pair[0])
+            typeS.as_binary = MagicMock(return_value=pair[0])
             self.assertEqual(typeS.precision_tag(), pair[1])
 
     def test_as_json(self):
@@ -43,6 +43,16 @@ class SubSecondComponentTest(unittest.TestCase):
             actual = SubSecondComponent(pair["byte_string"])
             expected = pair["expected"]
             self.assertEqual(actual.as_json(), expected)
+
+
+    def test_as_binary_case_7_fix(self):
+        obj = SubSecondComponent(
+            SubSecondComponentTest.COMPONENT_S_OBJS[0]["byte_str"])
+        with self.assertRaises(Exception) as context:
+            obj.asBinary()
+        self.assertTrue(
+            "SubSecondComponent instance has no attribute 'asBinary'"
+            in context.exception)
 
 
 if __name__ == '__main__':
