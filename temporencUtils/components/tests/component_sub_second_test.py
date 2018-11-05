@@ -4,7 +4,7 @@ from mock import MagicMock
 
 from temporencUtils.components.sub_second_component import SubSecondComponent
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.typeUtils import TypeUtils
+from temporencUtils.types.type_utils import TypeUtils
 
 
 class SubSecondComponentTest(unittest.TestCase):

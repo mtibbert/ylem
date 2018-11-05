@@ -3,7 +3,7 @@ import unittest
 
 from temporencUtils.temporencUtils import TemporencUtils
 from temporencUtils.types.baseType import BaseType
-from temporencUtils.types.typeUtils import TypeUtils
+from temporencUtils.types.type_utils import TypeUtils
 
 
 class BaseTypeTest(unittest.TestCase):

@@ -1,7 +1,7 @@
 import json
 
 from temporencUtils.components.baseComponent import BaseComponent
-from temporencUtils.types.typeUtils import TypeUtils
+from temporencUtils.types.type_utils import TypeUtils
 
 
 class SubSecondComponent(BaseComponent):
