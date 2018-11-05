@@ -9,7 +9,6 @@ from temporencUtils.types.typeUtils import TypeUtils
 class BaseTypeTest(unittest.TestCase):
 
     def setUp(self):
-
         BaseTypeTest.byte_string = TemporencUtils.packb(
             value=None, type=None, year=1983, month=None,
             day=None, hour=None, minute=None, second=None,
