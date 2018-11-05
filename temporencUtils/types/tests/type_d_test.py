@@ -45,7 +45,7 @@ class TypeDTest(BaseTypeTest):
     def test_as_binary_case_7_fix(self):
         with self.assertRaises(Exception) as context:
             self.obj.asBinary()
-        self.assertTrue("TypeD instance has no attribute 'as_binary'"
+        self.assertTrue("TypeD instance has no attribute 'asBinary'"
                         in context.exception)
 
 
