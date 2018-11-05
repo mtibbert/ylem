@@ -4,7 +4,7 @@ import unittest
 from temporencUtils.temporencUtils import TemporencUtils
 from temporencUtils.types.tests.base_type_test import BaseTypeTest
 from temporencUtils.types.typeT import TypeT
-from temporencUtils.types.typeUtils import TypeUtils
+from temporencUtils.types.type_utils import TypeUtils
 
 
 class TypeTTest(BaseTypeTest):

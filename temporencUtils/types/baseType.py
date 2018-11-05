@@ -1,7 +1,7 @@
 import json
 
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.typeUtils import TypeUtils
+from temporencUtils.types.type_utils import TypeUtils
 
 
 class BaseType:
