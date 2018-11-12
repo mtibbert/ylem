@@ -23,7 +23,7 @@ class TypeDTest(BaseTypeTest):
 
     def test_as_json(self):
         moment = TemporencUtils.unpackb(self.byte_string)
-        actual = self.obj.as_json()
+        actual = json.loads(self.obj.as_json())
         expected = {
             "d": {
                 "year": str(moment.year),
@@ -34,19 +34,7 @@ class TypeDTest(BaseTypeTest):
                     "month": str(self.obj.binary_month()),
                     "day": str(self.obj.binary_day())}
             }}
-        self.assertEqual(actual, json.dumps(expected))
-
-    def test_as_json_case_7_fix(self):
-        with self.assertRaises(Exception) as context:
-            self.obj.asJson()
-        self.assertTrue("TypeD instance has no attribute 'asJson'"
-                        in context.exception)
-
-    def test_as_binary_case_7_fix(self):
-        with self.assertRaises(Exception) as context:
-            self.obj.asBinary()
-        self.assertTrue("TypeD instance has no attribute 'asBinary'"
-                        in context.exception)
+        self.assertEqual(actual, expected)
 
 
 if __name__ == "__main__":
