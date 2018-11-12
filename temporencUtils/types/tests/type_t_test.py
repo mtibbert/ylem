@@ -65,7 +65,6 @@ class TypeTTest(BaseTypeTest):
         byte_str = obj._byte_str
         moment = TemporencUtils.unpackb(byte_str)
         actual = obj.as_json()
-        hex = str(TemporencUtils.hexify_byte_str(byte_str))
         expected = {
             "t": {
                 "hour": str(moment.hour),
@@ -79,20 +78,19 @@ class TypeTTest(BaseTypeTest):
             }}
         self.assertEqual(actual, json.dumps(expected))
 
-        def test_as_json_verbose(self):
+    def test_as_json_verbose(self):
             obj = TypeT(self.TYPE_T_OBJS["data"][0]["byte_str"])
             byte_str = obj._byte_str
             moment = TemporencUtils.unpackb(byte_str)
-            actual = obj.as_json()
-            hex = str(TemporencUtils.hexify_byte_str(byte_str))
+            actual = json.loads(obj.as_json(verbose=True))
             expected = {
                 TemporencUtils.hexify_byte_str(byte_str): {
                     "binary": str(TemporencUtils.byte_str_2_bin_str(byte_str)),
                     "bytes": str(len(byte_str)),
                     "moment": moment.__str__(),
-                    "type": str(TypeUtils.byte_str_2_type_name(self._byte_str)),
+                    "type": str(TypeUtils.byte_str_2_type_name(byte_str)),
                     "type_tag": str(TypeUtils.type_name_2_type_tag(
-                        TypeUtils.byte_str_2_type_name(self._byte_str))),
+                        TypeUtils.byte_str_2_type_name(byte_str))),
                     "d": {},
                     "s": {},
                     "t": {
@@ -107,25 +105,11 @@ class TypeTTest(BaseTypeTest):
                     },
                     "z": {}
                 }}
-            self.assertEqual(actual, json.dumps(expected))
+            self.assertEquals(actual, expected)
 
     def test_as_json_matches_as_json_verbose_mode_false(self):
         obj = TypeT(self.TYPE_T_OBJS["data"][0]["byte_str"])
         self.assertEquals(obj.as_json(), obj.as_json(verbose=False))
-
-    def test_as_json_case_7_fix(self):
-        obj = TypeT(self.TYPE_T_OBJS["data"][0]["byte_str"])
-        with self.assertRaises(Exception) as context:
-            obj.asJson()
-        self.assertTrue("TypeT instance has no attribute 'asJson'"
-                        in context.exception)
-
-    def test_as_binary_case_7_fix(self):
-        obj = TypeT(self.TYPE_T_OBJS["data"][0]["byte_str"])
-        with self.assertRaises(Exception) as context:
-            obj.asBinary()
-        self.assertTrue("TypeT instance has no attribute 'asBinary'"
-                        in context.exception)
 
 
 if __name__ == "__main__":
