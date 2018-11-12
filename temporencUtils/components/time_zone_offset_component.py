@@ -40,7 +40,7 @@ class TimeZoneOffsetComponent:
             self._binary = raw_binary[2:].zfill(self.__class__.BIT_LEN)
         else:
             # Todo: See Issue #11: Grammar Error in Error message
-            msg = "The increments {arg} is not in the range {lower} to {upper}"\
+            msg = "The increment {arg} is not in the range {lower} to {upper}"\
                 .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
             raise ValueError(msg)
 

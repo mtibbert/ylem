@@ -55,11 +55,16 @@ class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
         for offset in offsets:
             with self.assertRaises(ValueError) as ve:
                 Obj4Test(offset - Obj4Test.OFFSET_INCREMENT)
-                the_exception = ve.exception
-                expected = "The offset {arg} is not " + \
-                           "in the range {lower} to {upper}".format(
-                               arg=offset, lower=self.MIN, upper=self.NOT_SET)
-                self.assertEqual(the_exception.message, expected)
+            the_exception = ve.exception
+            expected = "The increment {arg} is not in the range " +\
+                       "{lower} to {upper}".format(
+                           arg=(offset - Obj4Test.OFFSET_INCREMENT),
+                           lower=self.MIN, upper=self.NOT_SET)
+            self.assertEqual(the_exception.message, expected)
+
+    def test_grammar_error_corrected_issue_11(self):
+        pass
+        # Grammar Error in Error message #11
 
     def test_ctor_special_not_utc(self):
         expected = str(int(bin(Obj4Test.TZ_NOT_UTC)[2:]))
