@@ -1,7 +1,7 @@
 import json
 
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.baseType import BaseType
+from temporencUtils.types.base_type import BaseType
 from temporencUtils.types.typeD import TypeD
 from temporencUtils.types.typeT import TypeT
 from temporencUtils.types.type_utils import TypeUtils
@@ -16,14 +16,21 @@ class TypeDT(BaseType):
 
     def __init__(self, byte_str):
         # raises ValueError if unable to pack
-        # BaseType.__init__(self, byte_str)
+        BaseType.__init__(self, byte_str)
         self._byte_str = byte_str
         moment = TemporencUtils.unpackb(byte_str)
         type_d_byte_str = TemporencUtils.packb(
-            year=moment.year, month=moment.month, day=moment.day)
+            moment.date(), type="D")
         self._type_d = TypeD(type_d_byte_str)
-        type_t_byte_str = TemporencUtils.packb(
-            hour=moment.hour, minute=moment.minute, day=moment.second)
+        self._init_time(moment)
+
+    def _init_time(self, moment):
+        if moment.second is None:
+            type_t_byte_str = TemporencUtils.packb(
+                type="T", hour=moment.hour, minute=moment.minute, second=None)
+        else:
+            type_t_byte_str = TemporencUtils.packb(
+                moment.time(), type="T")
         self._type_t = TypeT(type_t_byte_str)
 
     def as_binary(self):

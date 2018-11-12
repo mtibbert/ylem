@@ -76,7 +76,6 @@ class TypeDTTest(unittest.TestCase):
             obj = TypeDT(expected)
             actual = obj._byte_str
             self.assertEqual(actual, expected)
-            print obj.as_binary()
 
     def test_as_binary(self):
         actual = self.obj.as_binary()

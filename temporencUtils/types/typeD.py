@@ -1,7 +1,7 @@
 import json
 
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.baseType import BaseType
+from temporencUtils.types.base_type import BaseType
 
 
 class TypeD(BaseType):

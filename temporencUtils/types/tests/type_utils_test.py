@@ -203,7 +203,6 @@ class TypeUtilsTest(unittest.TestCase):
                 actual = TypeUtils.parse_component_s(
                     temporenc_type["byte_str"])
                 self.assertEquals(actual, expected)
-        print "test_parse_component_s() Completed"
 
     def test_type_name_2_type_tag(self):
         for temporenc_type in TypeUtils.TYPES:

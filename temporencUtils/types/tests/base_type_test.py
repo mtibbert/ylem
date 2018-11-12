@@ -2,7 +2,7 @@ import json
 import unittest
 
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.baseType import BaseType
+from temporencUtils.types.base_type import BaseType
 from temporencUtils.types.type_utils import TypeUtils
 
 
@@ -42,13 +42,6 @@ class BaseTypeTest(unittest.TestCase):
                 "z": {},
             }}
         self.assertEqual(actual, json.dumps(expected))
-
-    def test_as_json_case_7_fix(self):
-        obj = BaseTypeTest.base_type_obj
-        with self.assertRaises(Exception) as context:
-            obj.asJson()
-        self.assertTrue("BaseType instance has no attribute 'asJson'"
-                        in context.exception)
 
 
 if __name__ == "__main__":
