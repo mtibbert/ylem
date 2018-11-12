@@ -4,39 +4,7 @@ from temporencUtils.temporencUtils import TemporencUtils
 from temporencUtils.types.type_utils import TypeUtils
 
 
-class BaseType:
-    # template = {
-    #     "100011110111111111111111": {
-    #         "type": "",
-    #         "type_tag": "",
-    #         "bytes": "",
-    #         "hex": "",
-    #         "date": {
-    #             # "year": "None",
-    #             # "month": "None",
-    #             # "day": "None",
-    #             # "binary": {
-    #             #     "year": "None",
-    #             #     "month": "None",
-    #             #     "day": "None"}
-    #         },
-    #         "time": {
-    #             # "hour": "None",
-    #             # "minute": "None",
-    #             # "second": "None",
-    #             # "binary": {
-    #             #     "hour": "None",
-    #             #     "minute": "None",
-    #             #     "second": "None"}
-    #         },
-    #         "sub_second": {
-    #             # "binary": {
-    #             #     "millisecond": "None",
-    #             #     "microsecond": "None",
-    #             #     "nanosecond": "None"}
-    #         },
-    #         "tz_offset": "None",
-    #         }}
+class BaseType(object):
 
     _byte_str = None
 
