@@ -1,8 +1,6 @@
-import json
 import unittest
 
 from temporencUtils.temporencUtils import TemporencUtils
-from temporencUtils.types.tests.type_dt_test import TypeDTTest
 from temporencUtils.types.type_dts import TypeDTS
 from temporencUtils.types.type_utils import TypeUtils
 
@@ -191,7 +189,7 @@ class TypeDTSTest(unittest.TestCase):
                 actual = obj._byte_str
                 self.assertEqual(expected, actual)
 
-    def test_ctor_bin_str(self):
+    def test_as_binary(self):
         test_data = TypeUtils.VALID_PRECISION_NAMES
         for ss_name in test_data:
             hive = self.TYPE_DTS_OBJS[ss_name]
@@ -203,14 +201,6 @@ class TypeDTSTest(unittest.TestCase):
                 expected = TemporencUtils.byte_str_2_bin_str(byte_string)
                 actual = obj.as_binary()
                 self.assertEqual(expected, actual)
-
-    @unittest.skip("test_as_binary() not implemented")
-    def test_as_binary(self):
-        for item in self.TYPE_DTS_OBJS["data"]:
-            expected = item["expected"]["binary"]
-            obj = TypeDTS(item["byte_str"])
-            actual = obj.as_binary()
-            self.assertEqual(expected, actual)
 
     @unittest.skip("test_as_json() not implemented")
     def test_as_json(self):
