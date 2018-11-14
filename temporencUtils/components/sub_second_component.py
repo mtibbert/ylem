@@ -15,7 +15,10 @@ class SubSecondComponent(BaseComponent):
         self._binary = TypeUtils.parse_component_s(byte_str)
         self._type_name = TypeUtils.byte_str_2_type_name(byte_str)
         self._type_tag = TypeUtils.type_name_2_type_tag(self._type_name)
-        self._value = int(self._binary, 2)
+        if self._binary != "":
+            self._value = int(self._binary, 2)
+        else:
+            self._value = "{not set}"
 
     def binary_millisecond(self):
         """
