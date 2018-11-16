@@ -99,6 +99,12 @@ class SubSecondComponent(BaseComponent):
             "0": TypeUtils.PRECISION_TAGS["none"]}
         return precision_tags[str(len(self.as_binary()))]
 
+    def precision_name(self):
+        precision_names = {
+            "00": "millisecond", "01": "microsecond",
+            "10": "nanosecond", "11": "none"}
+        return precision_names[self.precision_tag()]
+
     def as_binary(self):
         """
         Returns binary representation
@@ -133,11 +139,9 @@ class SubSecondComponent(BaseComponent):
         # '{"01001111111111111111111111111111111111111100011110110000": {"d": {}, "bytes": "7", "hex": "4FFFFFFFFFC7B0", "s": {"precision tag": "00", "precision name": "millisecond", "value": "123", "binary": {"nanoseconds": "000000000000000000000001111011", "milliseconds": "0001111011", "microseconds": "00000000000001111011"}}, "moment": "??:??:??.123", "t": {}, "type_tag": "01", "z": "None", "type": "DTS"}}'
 
         """
-        idx = int(self.precision_tag())
-        precision_name = TypeUtils.PRECISION_TAGS.keys()[idx]
         template = {
             "s": {
-                "precision name": precision_name,
+                "precision name": self.precision_name(),
                 "value": str(self._value),
                 "binary": {
                     "microseconds": None,

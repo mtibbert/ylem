@@ -68,11 +68,22 @@ class SubSecondComponentTest(unittest.TestCase):
     def test_precision(self):
         type_s = SubSecondComponent(
             SubSecondComponentTest.COMPONENT_S_OBJS[0]["byte_str"])
-        data = (('abcdefghij', "00"), ('abcdefghijabcdefghij', "01"),
-                ('abcdefghijabcdefghijabcdefghij', "10"), ('', "11"))
+        data = (('0000000000', "00"), ('00000000000000000000', "01"),
+                ('000000000000000000000000000000', "10"), ('', "11"))
         for pair in data:
             type_s.as_binary = MagicMock(return_value=pair[0])
             self.assertEqual(type_s.precision_tag(), pair[1])
+
+    def test_precision_name(self):
+        type_s = SubSecondComponent(
+            SubSecondComponentTest.COMPONENT_S_OBJS[0]["byte_str"])
+        data = (("0000000000", "millisecond"),
+                ("00000000000000000000", "microsecond"),
+                ("000000000000000000000000000000", "nanosecond"),
+                ("", "none"))
+        for pair in data:
+            type_s.as_binary = MagicMock(return_value=pair[0])
+            self.assertEqual(type_s.precision_name(), pair[1])
 
     def test_as_json(self):
         data = [
