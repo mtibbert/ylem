@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from temporencUtils.temporencUtils import TemporencUtils
@@ -24,8 +25,8 @@ class TypeDTSTest(unittest.TestCase):
                                   "00" +                     #  2 - Precision
                                   "011110111111000001110" +  # 21 - Date
                                   "10010011001001100" +      # 17 - Time
-                                  "0001111011",              # 10 - Sub-second
-                                  "0000"                     #  4 - Padding
+                                  "0001111011" +             # 10 - Sub-second
+                                  "0000",                    #  4 - Padding
                         "d": {
                             "year": "1983",
                             "month": "1",
@@ -196,12 +197,56 @@ class TypeDTSTest(unittest.TestCase):
             i = 0
             while i < len(hive["data"]):
                 byte_string = hive["data"][i]["byte_str"]
-                i += 1
                 obj = TypeDTS(byte_string)
                 expected = TemporencUtils.byte_str_2_bin_str(byte_string)
                 actual = obj.as_binary()
                 self.assertEqual(expected, actual)
+                i += 1
 
-    @unittest.skip("test_as_json() not implemented")
     def test_as_json(self):
-        pass
+        test_data = TypeUtils.VALID_PRECISION_NAMES
+        for ss_name in test_data:
+            hive = self.TYPE_DTS_OBJS[ss_name]
+            i = 0
+            while i < len(hive["data"]):
+                byte_string = hive["data"][i]["byte_str"]
+                moment = TemporencUtils.unpackb(byte_string)
+                test_data = hive["data"][i]["expected"]
+                i += 1
+                actual = TypeDTS(byte_string)
+                template_hex = TemporencUtils.hexify_byte_str(actual._byte_str)
+                expected = \
+                    {template_hex:
+                         {"binary": test_data["binary"],
+                          "s": {},
+                          "bytes": str(len(actual._byte_str)),
+                          "z": {},
+                          "moment": str(moment),
+                          "type_tag": TypeUtils.type_name_2_type_tag(
+                              TypeUtils.byte_str_2_type_name(actual._byte_str)),
+                          "type": TypeUtils.byte_str_2_type_name(actual._byte_str)}}
+                # Load time info
+                obj = json.loads(actual._type_t.as_json())
+                expected[template_hex]["t"] = obj["t"]
+                # Load date info
+                obj = json.loads(actual._type_d.as_json())
+                expected[template_hex]["d"] = obj["d"]
+                # Load s info
+                obj = json.loads(actual._component_s.as_json())
+                expected[template_hex]["s"] = obj["s"]
+                actual_obj = json.loads(actual.as_json())
+                key = expected.keys()[0]
+                # Check hex values match
+                self.assertEqual(key, actual_obj.keys()[0])
+                keys = expected[key].keys()
+                # Check same number of attributes
+                self.assertEqual(len(keys), len(actual_obj[key].keys()))
+                # Check each attribute
+                for attr in keys:
+                    self.assertIn(
+                        attr, actual_obj[key].keys(),
+                        "The key '{attr}' is not in the key list of ({keys})"
+                            .format(attr=attr,
+                                    keys=", ".join(actual_obj[key].keys())))
+                    self.assertEqual(expected[key][attr], actual_obj[key][attr],
+                                     "Where key is '{key}'".format(key=key))
