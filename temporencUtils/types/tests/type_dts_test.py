@@ -220,7 +220,7 @@ class TypeDTSTest(unittest.TestCase):
                          {"binary": test_data["binary"],
                           "s": {},
                           "bytes": str(len(actual._byte_str)),
-                          "z": {},
+                          "o": {},
                           "moment": str(moment),
                           "type_tag": TypeUtils.type_name_2_type_tag(
                               TypeUtils.byte_str_2_type_name(actual._byte_str)),

@@ -113,7 +113,7 @@ class OffsetComponentTest(OffsetComponentBaseTest):
             data = {
                 "increments": "0",
                 "expected": {
-                    "z": {
+                    "o": {
                         "binary": str(item[3]),
                         "decimal": str(item[2]),
                         "increments": str(item[1]),

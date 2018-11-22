@@ -43,6 +43,6 @@ class TypeDTZ(TypeDT):
         z = json.loads(self._component_tz.as_json())
         template[key]["d"] = d[0]["d"]
         template[key]["t"] = t["t"]
-        template[key]["z"] = z["z"]
+        template[key]["o"] = z["o"]
         return json.dumps(template)
 

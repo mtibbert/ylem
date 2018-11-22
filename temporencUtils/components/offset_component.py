@@ -105,7 +105,7 @@ class OffsetComponent:
         """
         Returns date information in JSON notation.
         {
-            "z": {
+            "o": {
                 "binary": "",
                 "decimal": "",
                 "increments": "",
@@ -116,7 +116,7 @@ class OffsetComponent:
         :rtype: string
         """
         template = {
-            "z": {
+            "o": {
                 "binary": str(self.as_binary()),
                 "decimal": str(self.__class__.decode(self.as_binary())),
                 "increments": str(self.__class__.decode(self.as_binary()) -
