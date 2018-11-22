@@ -103,7 +103,7 @@ class TypeD(BaseType):
         '{"d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}}'
 
         >>> typeD.as_json(verbose=True)
-        '{"8F7FFF": {"binary": "100011110111111111111111", "d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}, "bytes": "3", "s": {}, "moment": "1983-??-??", "t": {}, "type_tag": "100", "z": {}, "type": "D"}}'
+        '{"8F7FFF": {"binary": "100011110111111111111111", "d": {"binary": {"month": "1111", "day": "11111", "year": "011110111111"}, "month": "None", "day": "None", "year": "1983"}, "bytes": "3", "s": {}, "moment": "1983-??-??", "t": {}, "type_tag": "100", "o": {}, "type": "D"}}'
 
         """
         template = {

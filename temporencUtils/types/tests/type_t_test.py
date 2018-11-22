@@ -103,7 +103,7 @@ class TypeTTest(BaseTypeTest):
                             "second": obj.binary_second(),
                         }
                     },
-                    "z": {}
+                    "o": {}
                 }}
             self.assertEquals(actual, expected)
 

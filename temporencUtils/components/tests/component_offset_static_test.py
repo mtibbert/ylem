@@ -1,47 +1,47 @@
 import unittest
 # Object under Test
-from temporencUtils.components.tests.base_time_zone_offset_component_test import \
-    TimeZoneOffsetComponentBaseTest
-from temporencUtils.components.time_zone_offset_component import \
-    TimeZoneOffsetComponent as Obj4Test
+from temporencUtils.components.tests.base_offset_component_test import \
+    OffsetComponentBaseTest
+from temporencUtils.components.offset_component import \
+    OffsetComponent as Obj4Test
 
 
-class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
+class OffsetComponentStaticTest(OffsetComponentBaseTest):
 
     # static constants
 
     def test_min(self):
         self.assertEquals(Obj4Test.MIN,
-                          TimeZoneOffsetComponentStaticTest.MIN)
+                          OffsetComponentStaticTest.MIN)
     def test_max(self):
         self.assertEquals(Obj4Test.MAX,
-                          TimeZoneOffsetComponentStaticTest.MAX)
+                          OffsetComponentStaticTest.MAX)
 
     def test_tz_not_utc(self):
         self.assertEquals(Obj4Test.TZ_NOT_UTC,
-                          TimeZoneOffsetComponentStaticTest.TZ_NOT_UTC)
+                          OffsetComponentStaticTest.TZ_NOT_UTC)
 
     def test_not_set(self):
         self.assertEquals(Obj4Test.NOT_SET,
-                          TimeZoneOffsetComponentStaticTest.NOT_SET)
+                          OffsetComponentStaticTest.NOT_SET)
 
     def test_increment_size(self):
         self.assertEquals(Obj4Test.INCREMENT_SIZE,
-                          TimeZoneOffsetComponentStaticTest.INCREMENT_SIZE)
+                          OffsetComponentStaticTest.INCREMENT_SIZE)
 
     def test_bit_len(self):
         self.assertEquals(Obj4Test.BIT_LEN,
-                          TimeZoneOffsetComponentStaticTest.BIT_LEN)
+                          OffsetComponentStaticTest.BIT_LEN)
 
     def test_offset(self):
         self.assertEquals(Obj4Test.OFFSET_INCREMENT,
-                          TimeZoneOffsetComponentStaticTest.OFFSET_INCREMENT)
+                          OffsetComponentStaticTest.OFFSET_INCREMENT)
 
 
     # static methods
 
     def test_encode(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.encode_minutes_of_offset(item[0])
             expected = item[2]
@@ -50,7 +50,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
             self.assertEquals(actual, expected, msg=msg)
 
     def test_encode_as_bin_is_true(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.encode_minutes_of_offset(item[0], as_bin=True)
             expected = item[3]
@@ -59,7 +59,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
                                    "for " + str(item[0])))
 
     def test_encode_decode(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             expected = item[0]
             #  Encode as Binary
@@ -71,7 +71,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
             self.assertTrue(actual == expected, msg=msg)
 
     def test_decode_dec_to_increments(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.decode(item[2])
             # Check default (to_minutes=False) matches
@@ -86,7 +86,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
             self.assertEquals(actual, expected, msg=msg)
 
     def test_decode_dec_to_minutes(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.decode(item[2], as_minutes=True)
             expected = item[0]
@@ -95,7 +95,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
             self.assertEquals(actual, expected, msg=msg)
 
     def test_decode_bin_to_decimal(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.decode(item[3])
             # Check default (to_minutes=False) matches
@@ -110,7 +110,7 @@ class TimeZoneOffsetComponentStaticTest(TimeZoneOffsetComponentBaseTest):
             self.assertEquals(actual, expected, msg=msg)
 
     def test_decode_bin_to_minutes(self):
-        dp = TimeZoneOffsetComponentStaticTest.DATA_PROVIDER
+        dp = OffsetComponentStaticTest.DATA_PROVIDER
         for item in dp:
             actual = Obj4Test.decode(item[3], as_minutes=True)
             expected = item[0]

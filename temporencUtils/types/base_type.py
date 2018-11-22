@@ -30,7 +30,7 @@ class BaseType(object):
                 "d": {},
                 "s": {},
                 "t": {},
-                "z": {},
+                "o": {},
             }}
 
         moment = TemporencUtils.unpackb(self._byte_str)

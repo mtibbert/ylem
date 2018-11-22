@@ -45,7 +45,7 @@ class TypeDTZTest(TypeDTTest):
                                 "minute": "011001",
                                 "second": "001100",
                             }},
-                        "z": {
+                        "o": {
                             "binary": "1000000",
                             "decimal": "64",
                             "increments": "0",
@@ -83,7 +83,7 @@ class TypeDTZTest(TypeDTTest):
                                 "minute": "011001",
                                 "second": "001100",
                             }},
-                        "z": {
+                        "o": {
                             "binary": "1000100",
                             "decimal": "68",
                             "increments": "4",
@@ -121,7 +121,7 @@ class TypeDTZTest(TypeDTTest):
                                 "minute": "011001",
                                 "second": "001100",
                             }},
-                        "z": {
+                        "o": {
                             "binary": "0101000",
                             "decimal": "40",
                             "increments": "-24",
@@ -170,7 +170,7 @@ class TypeDTZTest(TypeDTTest):
         expected[template_hex]["d"] = obj["d"]
         # Load tz info
         obj = json.loads(actual._component_tz.as_json())
-        expected[template_hex]["z"] = obj["z"]
+        expected[template_hex]["o"] = obj["o"]
         actual_obj = json.loads(actual.as_json())
         key = expected.keys()[0]
         # Check hex values match

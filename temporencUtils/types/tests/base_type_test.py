@@ -39,7 +39,7 @@ class BaseTypeTest(unittest.TestCase):
                 "d": {},
                 "s": {},
                 "t": {},
-                "z": {},
+                "o": {},
             }}
         self.assertEqual(actual, json.dumps(expected))
 

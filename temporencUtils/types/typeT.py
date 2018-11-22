@@ -106,7 +106,7 @@ class TypeT(BaseType):
         '{"t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}}'
 
         >>> typeT.as_json(verbose=True)
-        '{"A1267F": {"binary": "101000010010011001111111", "d": {}, "bytes": "3", "s": {}, "moment": "18:25:??", "t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}, "type_tag": "1010000", "z": {}, "type": "T"}}'
+        '{"A1267F": {"binary": "101000010010011001111111", "d": {}, "bytes": "3", "s": {}, "moment": "18:25:??", "t": {"binary": {"second": "111111", "minute": "011001", "hour": "10010"}, "second": "None", "minute": "25", "hour": "18"}, "type_tag": "1010000", "o": {}, "type": "T"}}'
 
         """
         template = {

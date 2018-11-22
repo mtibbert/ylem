@@ -2,13 +2,13 @@ import json
 import random
 import unittest
 
-from temporencUtils.components.tests.base_time_zone_offset_component_test\
-    import TimeZoneOffsetComponentBaseTest
-from temporencUtils.components.time_zone_offset_component\
-    import TimeZoneOffsetComponent as Obj4Test
+from temporencUtils.components.tests.base_offset_component_test\
+    import OffsetComponentBaseTest
+from temporencUtils.components.offset_component\
+    import OffsetComponent as Obj4Test
 
 
-class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
+class OffsetComponentTest(OffsetComponentBaseTest):
 
     # constructor
 
@@ -56,10 +56,10 @@ class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
             with self.assertRaises(ValueError) as ve:
                 Obj4Test(offset - Obj4Test.OFFSET_INCREMENT)
             the_exception = ve.exception
-            expected = "The increment {arg} is not in the range " +\
-                       "{lower} to {upper}".format(
-                           arg=(offset - Obj4Test.OFFSET_INCREMENT),
-                           lower=self.MIN, upper=self.NOT_SET)
+            expected = "The increment {arg} is not in the range {lower} to {" \
+                       "upper}".format(arg=(offset -
+                                            Obj4Test.OFFSET_INCREMENT),
+                                       lower=self.MIN, upper=self.NOT_SET)
             self.assertEqual(the_exception.message, expected)
 
     def test_grammar_error_corrected_issue_11(self):
@@ -113,7 +113,7 @@ class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
             data = {
                 "increments": "0",
                 "expected": {
-                    "z": {
+                    "o": {
                         "binary": str(item[3]),
                         "decimal": str(item[2]),
                         "increments": str(item[1]),
