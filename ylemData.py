@@ -12,7 +12,7 @@ def print_type_d():
         if (x % 3) == 0:
             data += "\n    "
         obj = TypeD(TemporencUtils.packb(year=x))
-        data += obj.asJson(True) + ", "
+        data += obj.as_json(True) + ", "
     data = data[:-2] + "\n]"
     print data
 
