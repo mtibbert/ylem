@@ -1,7 +1,7 @@
 from temporencUtils.components.tests.base_component_test import BaseComponentTest
 
 
-class TimeZoneOffsetComponentBaseTest(BaseComponentTest):
+class OffsetComponentBaseTest(BaseComponentTest):
     DATA_PROVIDER = None
     BIT_LEN = 7
     OFFSET_INCREMENT = 64
@@ -12,7 +12,7 @@ class TimeZoneOffsetComponentBaseTest(BaseComponentTest):
     MIN = 0
 
     def setUp(self):
-        TimeZoneOffsetComponentBaseTest.DATA_PROVIDER = \
+        OffsetComponentBaseTest.DATA_PROVIDER = \
             [[0, 0, 64, "1000000"],
              [60, 4, 68, "1000100"],
              [-360, -24, 40, "0101000"],

@@ -2,13 +2,13 @@ import json
 import random
 import unittest
 
-from temporencUtils.components.tests.base_time_zone_offset_component_test\
-    import TimeZoneOffsetComponentBaseTest
-from temporencUtils.components.time_zone_offset_component\
-    import TimeZoneOffsetComponent as Obj4Test
+from temporencUtils.components.tests.base_offset_component_test\
+    import OffsetComponentBaseTest
+from temporencUtils.components.offset_component\
+    import OffsetComponent as Obj4Test
 
 
-class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
+class OffsetComponentTest(OffsetComponentBaseTest):
 
     # constructor
 

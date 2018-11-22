@@ -1,8 +1,7 @@
 import json
 
 
-class TimeZoneOffsetComponent:
-
+class OffsetComponent:
     MIN = 0
     MAX = 125
     TZ_NOT_UTC = 126
@@ -40,7 +39,7 @@ class TimeZoneOffsetComponent:
             self._binary = raw_binary[2:].zfill(self.__class__.BIT_LEN)
         else:
             # Todo: See Issue #11: Grammar Error in Error message
-            msg = "The increment {arg} is not in the range {lower} to {upper}"\
+            msg = "The increment {arg} is not in the range {lower} to {upper}" \
                 .format(arg=increments, lower=self.MIN, upper=self.NOT_SET)
             raise ValueError(msg)
 
@@ -51,18 +50,18 @@ class TimeZoneOffsetComponent:
         decoded = None
         dec_encoded = None
         len_check = len(str(bin_or_decimal).lstrip("0")) <= \
-                    TimeZoneOffsetComponent.BIT_LEN
+                    OffsetComponent.BIT_LEN
         if type(bin_or_decimal).__name__ == "str" and len_check:
             dec_encoded = int(bin_or_decimal, 2)
             if as_minutes and dec_encoded is not None:
                 dec_encoded = ((dec_encoded -
-                                TimeZoneOffsetComponent.OFFSET_INCREMENT) * 15)
+                                OffsetComponent.OFFSET_INCREMENT) * 15)
         elif type(bin_or_decimal).__name__ == \
-                "int" and TimeZoneOffsetComponent.MIN \
+                "int" and OffsetComponent.MIN \
                 <= bin_or_decimal \
-                <= TimeZoneOffsetComponent.MAX:
+                <= OffsetComponent.MAX:
             dec_encoded = bin_or_decimal - \
-                          TimeZoneOffsetComponent.OFFSET_INCREMENT
+                          OffsetComponent.OFFSET_INCREMENT
             if as_minutes:
                 dec_encoded = (dec_encoded * 15)
 
@@ -74,9 +73,9 @@ class TimeZoneOffsetComponent:
     @staticmethod
     def encode_minutes_of_offset(encode_minutes_of_offset, as_bin=False):
         offset = (encode_minutes_of_offset / 15) + \
-                  TimeZoneOffsetComponent.OFFSET_INCREMENT
+                 OffsetComponent.OFFSET_INCREMENT
         if as_bin:
-            offset = (bin(offset))[2:].zfill(TimeZoneOffsetComponent.BIT_LEN)
+            offset = (bin(offset))[2:].zfill(OffsetComponent.BIT_LEN)
         return offset
 
     # instance methods
@@ -97,8 +96,10 @@ class TimeZoneOffsetComponent:
         :rtype: int | None
         """
         minutes = self.__class__.decode(self.as_binary(), as_minutes=True)
-        if self.is_valid() and not self.is_not_set(): return minutes
-        else: return None
+        if self.is_valid() and not self.is_not_set():
+            return minutes
+        else:
+            return None
 
     def as_json(self):
         """
@@ -159,4 +160,3 @@ class TimeZoneOffsetComponent:
         """
         return self.__class__.decode(self.as_binary()) in \
                range(self.__class__.MIN, self.__class__.NOT_SET + 1)
-

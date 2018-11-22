@@ -1,7 +1,7 @@
 import json
 
-from temporencUtils.components.time_zone_offset_component import \
-    TimeZoneOffsetComponent
+from temporencUtils.components.offset_component import \
+    OffsetComponent
 from temporencUtils.temporencUtils import TemporencUtils
 from temporencUtils.types.type_dt import TypeDT
 
@@ -20,7 +20,7 @@ class TypeDTZ(TypeDT):
         TypeDT.__init__(self, byte_str)
         moment = TemporencUtils.unpackb(byte_str)
         self._component_tz = \
-            TimeZoneOffsetComponent(moment.tz_offset, encode=True)
+            OffsetComponent(moment.tz_offset, encode=True)
 
     # inherited from TypeDT
     # def as_binary(self):
