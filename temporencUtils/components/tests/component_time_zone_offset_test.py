@@ -56,10 +56,10 @@ class TimeZoneOffsetComponentTest(TimeZoneOffsetComponentBaseTest):
             with self.assertRaises(ValueError) as ve:
                 Obj4Test(offset - Obj4Test.OFFSET_INCREMENT)
             the_exception = ve.exception
-            expected = "The increment {arg} is not in the range " +\
-                       "{lower} to {upper}".format(
-                           arg=(offset - Obj4Test.OFFSET_INCREMENT),
-                           lower=self.MIN, upper=self.NOT_SET)
+            expected = "The increment {arg} is not in the range {lower} to {" \
+                       "upper}".format(arg=(offset -
+                                            Obj4Test.OFFSET_INCREMENT),
+                                       lower=self.MIN, upper=self.NOT_SET)
             self.assertEqual(the_exception.message, expected)
 
     def test_grammar_error_corrected_issue_11(self):
